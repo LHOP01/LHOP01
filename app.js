@@ -28,3 +28,11 @@ const key=document.getElementById("customKey").value;
 document.getElementById("result").innerHTML=key;
 
 }
+
+
+
+window.onload=function(){
+
+loadKeys();
+
+}
