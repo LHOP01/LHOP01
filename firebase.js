@@ -3,7 +3,9 @@ import {
   getDatabase,
   ref,
   push,
-  set
+  set,
+  onValue,
+  remove
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 const firebaseConfig = {
@@ -58,23 +60,33 @@ table.innerHTML=`
 snapshot.forEach((item)=>{
 
 const data=item.val();
+const id=item.key;  
 
-table.innerHTML+=`
-
+table.innerHTML += `
 <tr>
-
 <td>${data.key}</td>
-
 <td>${data.validity}</td>
-
 <td>${data.status}</td>
-
+<td>
+<button onclick="deleteKey('${id}')">
+Delete
+</button>
+</td>
 </tr>
-
 `;
 
 });
 
 });
+
+}
+
+
+
+window.deleteKey = function(id){
+
+remove(ref(db,"keys/"+id));
+
+alert("Key Deleted Successfully");
 
 }
