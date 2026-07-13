@@ -31,3 +31,50 @@ window.saveKey = function(key, days){
     });
 
 }
+
+
+import { onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+window.loadKeys=function(){
+
+const table=document.getElementById("keyTable");
+
+onValue(ref(db,"keys"),(snapshot)=>{
+
+table.innerHTML=`
+
+<tr>
+
+<th>Key</th>
+
+<th>Validity</th>
+
+<th>Status</th>
+
+</tr>
+
+`;
+
+snapshot.forEach((item)=>{
+
+const data=item.val();
+
+table.innerHTML+=`
+
+<tr>
+
+<td>${data.key}</td>
+
+<td>${data.validity}</td>
+
+<td>${data.status}</td>
+
+</tr>
+
+`;
+
+});
+
+});
+
+}
