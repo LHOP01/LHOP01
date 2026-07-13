@@ -132,6 +132,36 @@ margin-top:10px;
 
 </div>
 
+<div class="card">
+
+<h2>Generate Key</h2>
+
+<select id="days">
+<option value="1">1 Day</option>
+<option value="3">3 Days</option>  
+<option value="7">7 Days</option>
+<option value="15">15 Days</option>  
+<option value="30">30 Days</option>
+<option value="365">1 Year</option>
+<option value="9999">Lifetime</option>
+</select>
+
+<br>
+
+<button onclick="generateKey()">Generate Random Key</button>
+
+<br><br>
+
+<input id="customKey" placeholder="Enter Custom Key">
+
+<br>
+
+<button onclick="generateCustomKey()">Generate Custom Key</button>
+
+<div id="result"></div>
+
+</div>  
+  
 </div>
 
 <!-- Firebase -->
