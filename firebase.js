@@ -35,7 +35,7 @@ window.saveKey = function(key, days){
 }
 
 
-import { onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
 
 window.loadKeys=function(){
 
