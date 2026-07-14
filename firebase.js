@@ -111,3 +111,22 @@ remove(ref(db,"keys/"+id));
 alert("Key Deleted Successfully");
 
 }
+
+window.createCustomKey = function(){
+
+const key = document.getElementById("customKey").value;
+const days = document.getElementById("customDays").value;
+
+if(key=="" || days==""){
+    alert("Fill all fields");
+    return;
+}
+
+saveKey(key, days);
+
+alert("Custom Key Saved");
+
+document.getElementById("customKey").value="";
+document.getElementById("customDays").value="";
+
+}
