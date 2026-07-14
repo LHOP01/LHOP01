@@ -57,10 +57,26 @@ table.innerHTML=`
 
 `;
 
+let total = 0;
+let active = 0;
+let expired = 0;
+let lifetime = 0;  
+
 snapshot.forEach((item)=>{
 
 const data=item.val();
 const id=item.key;  
+
+total++;
+
+if(data.status === "active"){
+    active++;
+}
+
+if(data.validity == "9999"){
+    lifetime++;
+}
+  
 
 table.innerHTML += `
 <tr>
@@ -77,6 +93,11 @@ Delete
 
 });
 
+document.getElementById("totalKeys").textContent = total;
+document.getElementById("activeKeys").textContent = active;
+document.getElementById("expiredKeys").textContent = expired;
+document.getElementById("lifetimeKeys").textContent = lifetime;
+  
 });
 
 }
