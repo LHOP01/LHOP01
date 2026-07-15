@@ -62,14 +62,38 @@ let active = 0;
 let expired = 0;
 let lifetime = 0;  
 
+const keys = [];
+
 snapshot.forEach((item)=>{
+    keys.push({
+        id: item.key,
+        data: item.val()
+    });
+});
 
-const data=item.val();
-const id=item.key;  
+keys.sort((a,b)=> b.data.created - a.data.created);
 
-if (!data.key.toLowerCase().includes(search)) {
+table.innerHTML = `
+<tr>
+<th>Key</th>
+<th>Buyer</th>
+<th>Validity</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+`;
+  
+keys.forEach((item)=>{
+
+const data = item.data;
+const id = item.id;
+
+const keyMatch = data.key.toLowerCase().includes(search);
+const buyerMatch = (data.buyer || "").toLowerCase().includes(search);
+
+if (!keyMatch && !buyerMatch) {
     return;
-}  
+}
   
 if (data.validity != "9999" &&
     data.status !== "expired" &&
