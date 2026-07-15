@@ -52,6 +52,22 @@ color:#58a6ff;
 
 tr:hover{
 
-background:#21262d;
+button{
+background:#238636;
+cursor:pointer;
+}
 
+.active{
+color:#00ff66;
+font-weight:bold;
+}
+
+.expired{
+color:#ff3333;
+font-weight:bold;
+}
+
+.revoked{
+color:#ff9900;
+font-weight:bold;
 }
