@@ -22,12 +22,13 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-window.saveKey = function(key, days){
+window.saveKey = function(key, days, buyer){
 
     const id = push(ref(db,"keys"));
 
     set(id,{
     key: key,
+    buyer: buyer,  
     validity: days,
     status: "active",
     created: Date.now(),
@@ -49,13 +50,9 @@ onValue(ref(db,"keys"),(snapshot)=>{
 table.innerHTML=`
 
 <tr>
-
 <th>Key</th>
-
 <th>Validity</th>
-
 <th>Status</th>
-
 </tr>
 
 `;
@@ -102,6 +99,7 @@ if(data.status === "expired"){
 table.innerHTML += `
 <tr>
 <td>${data.key}</td>
+<td>${data.buyer || "-"}</td>
 <td>${data.validity}</td>
 <td>
 <span class="${data.status}">
