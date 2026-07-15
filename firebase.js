@@ -71,7 +71,13 @@ snapshot.forEach((item)=>{
     });
 });
 
-keys.sort((a,b)=> b.data.created - a.data.created);
+const sort = document.getElementById("sortType").value;
+
+if(sort == "new"){
+    keys.sort((a,b)=> b.data.created - a.data.created);
+}else{
+    keys.sort((a,b)=> a.data.created - b.data.created);
+}
 
 table.innerHTML = `
 <tr>
@@ -206,6 +212,34 @@ window.copyKey = function(key){
 navigator.clipboard.writeText(key);
 
 alert("Key Copied Successfully");
+
+}
+
+window.exportKeys = function(){
+
+let csv = "Key,Buyer,Validity,Status\n";
+
+onValue(ref(db,"keys"),(snapshot)=>{
+
+snapshot.forEach((item)=>{
+
+const data = item.val();
+
+csv += `${data.key},${data.buyer || ""},${data.validity},${data.status}\n`;
+
+});
+
+const blob = new Blob([csv], {type:"text/csv"});
+const url = URL.createObjectURL(blob);
+
+const a = document.createElement("a");
+a.href = url;
+a.download = "LHOP01_Keys.csv";
+a.click();
+
+URL.revokeObjectURL(url);
+
+},{onlyOnce:true});
 
 }
 
