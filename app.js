@@ -10,12 +10,12 @@ return out;
 function generateKey(){
 
 const days=document.getElementById("days").value;
-
+const buyer = document.getElementById("buyerName").value;
 const key="LHOP01-"+randomPart(4)+"-"+randomPart(4);
 
 document.getElementById("result").innerHTML=key;
 
-saveKey(key,days);
+saveKey(key, days, buyer);
 
 alert("Key Saved Successfully");
 
