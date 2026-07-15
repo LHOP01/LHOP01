@@ -5,7 +5,8 @@ import {
   push,
   set,
   onValue,
-  remove
+  remove,
+  update
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 const firebaseConfig = {
@@ -68,9 +69,16 @@ snapshot.forEach((item)=>{
 const data=item.val();
 const id=item.key;  
 
-if(data.validity != "9999" && Date.now() > data.expire){
+if (data.validity != "9999" &&
+    data.status !== "expired" &&
+    Date.now() > data.expire) {
+
+    update(ref(db, "keys/" + id), {
+        status: "expired"
+    });
+
     data.status = "expired";
-}  
+}
   
 total++;
 
