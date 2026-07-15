@@ -174,6 +174,10 @@ document.getElementById("lifetimeKeys").textContent = lifetime;
 
 window.deleteKey = function(id){
 
+if(!confirm("Are you sure you want to delete this key?")){
+    return;
+}
+
 remove(ref(db,"keys/"+id));
 
 alert("Key Deleted Successfully");
