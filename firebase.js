@@ -76,7 +76,10 @@ if(data.status === "active"){
 if(data.validity == "9999"){
     lifetime++;
 }
-  
+
+if(data.status === "expired"){
+    expired++;
+}  
 
 table.innerHTML += `
 <tr>
