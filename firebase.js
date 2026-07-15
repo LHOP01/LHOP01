@@ -26,11 +26,12 @@ window.saveKey = function(key, days){
     const id = push(ref(db,"keys"));
 
     set(id,{
-        key:key,
-        validity:days,
-        status:"active",
-        created:Date.now()
-    });
+    key: key,
+    validity: days,
+    status: "active",
+    created: Date.now(),
+    expire: Date.now() + (Number(days) * 24 * 60 * 60 * 1000)
+});
 
 }
 
@@ -67,6 +68,10 @@ snapshot.forEach((item)=>{
 const data=item.val();
 const id=item.key;  
 
+if(data.validity != "9999" && Date.now() > data.expire){
+    data.status = "expired";
+}  
+  
 total++;
 
 if(data.status === "active"){
