@@ -7,6 +7,10 @@ out+=chars[Math.floor(Math.random()*chars.length)];
 return out;
 }
 
+if(localStorage.getItem("adminLogin") !== "true"){
+    window.location.href = "login.html";
+}
+
 function generateKey(){
 
 const days=document.getElementById("days").value;
@@ -34,5 +38,13 @@ document.getElementById("result").innerHTML=key;
 window.onload=function(){
 
 loadKeys();
+
+}
+
+function logout(){
+
+localStorage.removeItem("adminLogin");
+
+window.location.href = "login.html";
 
 }
