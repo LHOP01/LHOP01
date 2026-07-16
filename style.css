@@ -175,3 +175,17 @@ color:white;
 font-size:14px;
 box-sizing:border-box;
 }
+
+#toast{
+position:fixed;
+top:20px;
+right:20px;
+background:#238636;
+color:white;
+padding:12px 18px;
+border-radius:8px;
+font-weight:bold;
+display:none;
+z-index:9999;
+box-shadow:0 5px 15px rgba(0,0,0,0.3);
+}
