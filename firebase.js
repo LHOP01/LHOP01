@@ -48,7 +48,8 @@ const table=document.getElementById("keyTable");
 const search = document.getElementById("searchKey").value.toLowerCase();
   
 onValue(ref(db,"keys"),(snapshot)=>{
-
+let buyers = new Set();
+  
 table.innerHTML=`
 
 <tr>
@@ -96,6 +97,10 @@ keys.forEach((item)=>{
 const data = item.data;
 const id = item.id;
 
+if(data.buyer){
+    buyers.add(data.buyer);
+}  
+  
 const keyMatch = data.key.toLowerCase().includes(search);
 const buyerMatch = (data.buyer || "").toLowerCase().includes(search);
 
@@ -170,6 +175,7 @@ Delete
 
 });
 
+document.getElementById("totalBuyers").innerText = buyers.size;  
 document.getElementById("totalKeys").textContent = total;
 document.getElementById("activeKeys").textContent = active;
 document.getElementById("expiredKeys").textContent = expired;
