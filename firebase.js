@@ -184,6 +184,25 @@ alert("Key Deleted Successfully");
 
 }
 
+onValue(ref(db, "settings"), (snapshot) => {
+
+  const data = snapshot.val();
+
+  if (!data) return;
+
+  if (data.maintenance === true) {
+
+    document.body.innerHTML = `
+      <div style="padding:40px;text-align:center;color:white;">
+        <h1>🚧 Website Under Maintenance</h1>
+        <p>Please try again later.</p>
+      </div>
+    `;
+
+  }
+
+});
+
 window.editKey = function(id){
 
 const days = prompt("Enter new validity (1,3,7,15,30,365,9999)");
