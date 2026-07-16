@@ -164,6 +164,8 @@ Edit
 Revoke
 </button>
 
+<button onclick="resetHWID('${id}')">Reset HWID</button>
+
 <td>
 <span class="status-${data.status}">
 ${data.status}
@@ -343,3 +345,18 @@ window.getKeyData = function(callback){
     });
 
 }
+
+window.resetHWID = function(id){
+
+    if(!confirm("Reset HWID for this key?")){
+        return;
+    }
+
+    update(ref(db, "keys/" + id), {
+        hwid: ""
+    });
+
+    alert("HWID Reset Successfully");
+
+}
+
