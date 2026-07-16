@@ -25,10 +25,12 @@ window.saveSettings = function () {
 
   const panelName = document.getElementById("panelName").value;
   const announcement = document.getElementById("announcement").value;
-
+  const maintenance = document.getElementById("maintenance").checked;
+  
   set(ref(db, "settings"), {
     panelName: panelName,
     announcement: announcement
+    maintenance: maintenance
   });
 
   alert("Settings Saved Successfully");
@@ -43,7 +45,8 @@ onValue(ref(db, "settings"), (snapshot) => {
 
     document.getElementById("panelName").value = data.panelName || "";
     document.getElementById("announcement").value = data.announcement || "";
-
+    document.getElementById("maintenance").checked = data.maintenance || false;
+    
   }
 
 });
