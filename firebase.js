@@ -31,6 +31,8 @@ window.saveKey = function(key, days, buyer){
     buyer: buyer,  
     validity: days,
     status: "active",
+    hwid: "",
+    lastLogin: 0,  
     created: Date.now(),
     expire: Date.now() + (Number(days) * 24 * 60 * 60 * 1000)
 });
@@ -288,5 +290,43 @@ alert("Custom Key Saved");
 
 document.getElementById("customKey").value="";
 document.getElementById("customDays").value="";
+
+}
+
+window.bindHWID = function(id, hwid){
+
+    update(ref(db, "keys/" + id), {
+        hwid: hwid,
+        lastLogin: Date.now()
+    });
+
+}
+
+window.updateLastLogin = function(id){
+
+    update(ref(db, "keys/" + id), {
+        lastLogin: Date.now()
+    });
+
+}
+
+window.getKeyData = function(callback){
+
+    onValue(ref(db, "keys"), (snapshot)=>{
+
+        const keys = [];
+
+        snapshot.forEach((item)=>{
+            keys.push({
+                id: item.key,
+                data: item.val()
+            });
+        });
+
+        callback(keys);
+
+    }, {
+        onlyOnce: true
+    });
 
 }
