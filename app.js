@@ -25,12 +25,20 @@ alert("Key Saved Successfully");
 
 }
 
-function generateCustomKey(){
+function generateCustomKey() {
+    const key = document.getElementById("customKey").value;
+    const days = document.getElementById("customDays").value;
 
-const key=document.getElementById("customKey").value;
+    if (key === "" || days === "") {
+        alert("Fill all fields");
+        return;
+    }
 
-document.getElementById("result").innerHTML=key;
+    saveKey(key, days, "-");
+    alert("Custom Key Saved Successfully");
 
+    document.getElementById("customKey").value = "";
+    document.getElementById("customDays").value = "";
 }
 
 
