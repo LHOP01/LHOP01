@@ -1,11 +1,23 @@
 button{
-background:#238636;
-color:white;
-border:none;
-padding:12px 20px;
-border-radius:8px;
-cursor:pointer;
-margin:5px;
+    background:#238636;
+    color:white;
+    border:none;
+    padding:10px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:bold;
+    transition:0.3s;
+    margin:3px;
+}
+
+button:hover{
+    background:#2ea043;
+    transform:scale(1.05);
+}
+
+button:active{
+    transform:scale(0.98);
 }
 
 input,select{
@@ -70,4 +82,50 @@ font-weight:bold;
 .revoked{
 color:#ff9900;
 font-weight:bold;
+}
+
+tr:hover{
+    background:#21262d;
+}
+
+th{
+    background:#161b22;
+    color:#58a6ff;
+    font-weight:bold;
+}
+
+td{
+    color:white;
+}
+
+table{
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.status-active{
+    background:#238636;
+    color:white;
+    padding:4px 10px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.status-expired{
+    background:#da3633;
+    color:white;
+    padding:4px 10px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.status-revoked{
+    background:#d29922;
+    color:white;
+    padding:4px 10px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
 }
