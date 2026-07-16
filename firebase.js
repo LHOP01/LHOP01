@@ -151,6 +151,12 @@ Edit
 Revoke
 </button>
 
+<td>
+<span class="status-${data.status}">
+${data.status}
+</span>
+</td>
+
 <button onclick="deleteKey('${id}')">
 Delete
 </button>
