@@ -64,7 +64,8 @@ let total = 0;
 let active = 0;
 let expired = 0;
 let lifetime = 0;  
-
+let hwids = 0;
+  
 const keys = [];
 
 snapshot.forEach((item)=>{
@@ -100,6 +101,10 @@ const id = item.id;
 if(data.buyer){
     buyers.add(data.buyer);
 }  
+  
+if(data.hwid){
+    hwids++;
+}
   
 const keyMatch = data.key.toLowerCase().includes(search);
 const buyerMatch = (data.buyer || "").toLowerCase().includes(search);
@@ -180,6 +185,7 @@ document.getElementById("totalKeys").textContent = total;
 document.getElementById("activeKeys").textContent = active;
 document.getElementById("expiredKeys").textContent = expired;
 document.getElementById("lifetimeKeys").textContent = lifetime;
+document.getElementById("totalHwids").innerText = hwids;  
   
 });
 
