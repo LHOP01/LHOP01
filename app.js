@@ -21,7 +21,7 @@ document.getElementById("result").innerHTML=key;
 
 saveKey(key, days, buyer);
 
-alert("Key Saved Successfully");
+showToast("✅ Key Generated Successfully");
 
 }
 
@@ -35,7 +35,7 @@ function generateCustomKey() {
     }
 
     saveKey(key, days, "-");
-    alert("Custom Key Saved Successfully");
+    showToast("✅ Custom Key Saved Successfully");
 
     document.getElementById("customKey").value = "";
     document.getElementById("customDays").value = "";
@@ -54,5 +54,19 @@ function logout(){
 localStorage.removeItem("adminLogin");
 
 window.location.href = "login.html";
+
+}
+
+window.showToast = function(message){
+
+    const toast = document.getElementById("toast");
+
+    toast.innerText = message;
+
+    toast.style.display = "block";
+
+    setTimeout(()=>{
+        toast.style.display = "none";
+    },2000);
 
 }
