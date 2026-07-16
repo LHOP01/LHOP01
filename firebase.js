@@ -132,6 +132,7 @@ table.innerHTML += `
 <tr>
 <td>${data.key}</td>
 <td>${data.buyer || "-"}</td>
+<td>${data.hwid || "Not Bound"}</td>
 <td>${data.validity}</td>
 <td>
 <span class="${data.status}">
