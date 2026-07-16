@@ -360,3 +360,24 @@ window.resetHWID = function(id){
 
 }
 
+window.searchKeys = function(){
+
+    const input = document.getElementById("searchBox").value.toLowerCase();
+
+    const table = document.getElementById("keyTable");
+
+    const rows = table.getElementsByTagName("tr");
+
+    for(let i = 1; i < rows.length; i++){
+
+        const text = rows[i].innerText.toLowerCase();
+
+        if(text.includes(input)){
+            rows[i].style.display = "";
+        }else{
+            rows[i].style.display = "none";
+        }
+
+    }
+
+}
