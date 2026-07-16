@@ -381,3 +381,40 @@ window.searchKeys = function(){
     }
 
 }
+
+window.exportKeys = function(){
+
+    let csv = "Key,Buyer,HWID,Validity,Status\n";
+
+    const rows = document.querySelectorAll("#keyTable tr");
+
+    rows.forEach((row, index)=>{
+
+        if(index === 0) return;
+
+        const cols = row.querySelectorAll("td");
+
+        if(cols.length >= 5){
+
+            csv +=
+                `"${cols[0].innerText}",` +
+                `"${cols[1].innerText}",` +
+                `"${cols[2].innerText}",` +
+                `"${cols[3].innerText}",` +
+                `"${cols[4].innerText}"\n`;
+
+        }
+
+    });
+
+    const blob = new Blob([csv], {type:"text/csv"});
+
+    const a = document.createElement("a");
+
+    a.href = URL.createObjectURL(blob);
+
+    a.download = "LHOP01_Keys.csv";
+
+    a.click();
+
+}
