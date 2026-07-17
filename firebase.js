@@ -65,7 +65,11 @@ let active = 0;
 let expired = 0;
 let lifetime = 0;  
 let hwids = 0;
+let todayKeys = 0;
+let weekKeys = 0;
+
   
+const today = new Date().toDateString();  
 const keys = [];
 
 snapshot.forEach((item)=>{
@@ -98,6 +102,25 @@ keys.forEach((item)=>{
 const data = item.data;
 const id = item.id;
 
+if(data.created){
+
+    const keyDate = new Date(data.created).toDateString();
+
+    if(keyDate === today){
+        todayKeys++;
+    }
+
+}  
+
+const now = new Date();
+const created = new Date(data.created);
+
+const diffDays = Math.floor((now - created) / (1000 * 60 * 60 * 24));
+
+if(diffDays <= 7){
+    weekKeys++;
+}
+  
 if(data.buyer){
     buyers.add(data.buyer);
 }  
@@ -188,6 +211,8 @@ document.getElementById("activeKeys").textContent = active;
 document.getElementById("expiredKeys").textContent = expired;
 document.getElementById("lifetimeKeys").textContent = lifetime;
 document.getElementById("totalHwids").innerText = hwids;  
+document.getElementById("todayKeys").innerText = todayKeys;
+document.getElementById("weekKeys").innerText = weekKeys;
   
 });
 
