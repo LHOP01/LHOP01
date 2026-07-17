@@ -275,7 +275,7 @@ if(!confirm("Are you sure you want to delete this key?")){
 
 remove(ref(db,"keys/"+id));
 
-alert("Key Deleted Successfully");
+showToast("🗑️ Key Deleted Successfully");
 
 }
 
@@ -311,8 +311,7 @@ update(ref(db,"keys/"+id),{
     expire: Date.now() + (Number(days) * 24 * 60 * 60 * 1000)
 });
 
-alert("Key Updated Successfully");
-
+showToast("✏️ Key Updated Successfully");
 }
 
 window.revokeKey = function(id){
@@ -321,7 +320,7 @@ update(ref(db,"keys/"+id),{
     status:"revoked"
 });
 
-alert("Key Revoked Successfully");
+showToast("🚫 Key Revoked Successfully");
 
 }
 
@@ -329,7 +328,7 @@ window.copyKey = function(key){
 
 navigator.clipboard.writeText(key);
 
-alert("Key Copied Successfully");
+showToast("📋 Key Copied Successfully");
 
 }
 
@@ -437,7 +436,7 @@ window.resetHWID = function(id){
         hwid: ""
     });
 
-    alert("HWID Reset Successfully");
+    showToast("🔄 HWID Reset Successfully");
 
 }
 
