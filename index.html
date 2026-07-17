@@ -219,6 +219,13 @@ onkeyup="loadKeys()">
 <option value="old">Oldest First</option>
 </select>
 
+<select id="statusFilter" onchange="loadKeys()">
+<option value="all">All Keys</option>
+<option value="active">Active Keys</option>
+<option value="expired">Expired Keys</option>
+<option value="lifetime">Lifetime Keys</option>
+</select>
+  
  <button onclick="exportKeys()">
 Export CSV
 </button>
