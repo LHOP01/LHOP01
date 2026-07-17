@@ -369,6 +369,15 @@ alert("Key Copied Successfully");
 
 }
 
+function addLog(action){
+
+    push(ref(db, "logs"), {
+        action: action,
+        time: Date.now()
+    });
+
+}
+
 window.exportKeys = function(){
 
 let csv = "Key,Buyer,Validity,Status\n";
