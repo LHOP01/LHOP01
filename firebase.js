@@ -98,43 +98,7 @@ table.innerHTML = `
 </tr>
 `;
 
-let dashboardChart = null;
 
-function updateDashboardChart(total, active, expired, lifetime) {
-
-    const canvas = document.getElementById("dashboardChart");
-
-    if (!canvas) return;
-
-    const ctx = canvas.getContext("2d");
-
-    if (dashboardChart) {
-        dashboardChart.destroy();
-    }
-
-    dashboardChart = new Chart(ctx, {
-        type: "bar",
-        data: {
-            labels: [
-                "Total",
-                "Active",
-                "Expired",
-                "Lifetime"
-            ],
-            datasets: [{
-                label: "Keys",
-                data: [
-                    total,
-                    active,
-                    expired,
-                    lifetime
-                ]
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false
-        }
     });
 
 }  
@@ -535,3 +499,34 @@ window.exportKeys = function(){
     a.click();
 
 }
+
+let dashboardChart = null;
+
+function updateDashboardChart(total, active, expired, lifetime) {
+
+    const canvas = document.getElementById("dashboardChart");
+
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+
+    if (dashboardChart) {
+        dashboardChart.destroy();
+    }
+
+    dashboardChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: ["Total", "Active", "Expired", "Lifetime"],
+            datasets: [{
+                label: "Keys",
+                data: [total, active, expired, lifetime]
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+
+  }
