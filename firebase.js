@@ -46,6 +46,7 @@ window.loadKeys=function(){
 
 const table=document.getElementById("keyTable");
 const search = document.getElementById("searchKey").value.toLowerCase();
+const filter = document.getElementById("statusFilter").value;
   
 onValue(ref(db,"keys"),(snapshot)=>{
 let buyers = new Set();
@@ -71,7 +72,7 @@ let monthKeys = 0;
   
 const today = new Date().toDateString();  
 const keys = [];
-
+const recent = [];
 snapshot.forEach((item)=>{
     keys.push({
         id: item.key,
@@ -102,6 +103,10 @@ keys.forEach((item)=>{
 const data = item.data;
 const id = item.id;
 
+recent.push(
+`🔑 ${data.key} - ${data.buyer || "Unknown"}`
+);
+  
 if(data.created){
 
     const keyDate = new Date(data.created).toDateString();
@@ -165,6 +170,18 @@ if(data.status === "expired"){
     expired++;
 }  
 
+if(filter === "active" && data.status !== "Active"){
+    return;
+}
+
+if(filter === "expired" && data.status !== "Expired"){
+    return;
+}
+
+if(filter === "lifetime" && data.validity !== "Lifetime"){
+    return;
+}
+  
 table.innerHTML += `
 <tr>
 <td>${data.key}</td>
@@ -218,6 +235,19 @@ document.getElementById("totalHwids").innerText = hwids;
 document.getElementById("todayKeys").innerText = todayKeys;
 document.getElementById("weekKeys").innerText = weekKeys;
 document.getElementById("monthKeys").innerText = monthKeys;
+const activity = document.getElementById("recentActivity");
+
+if(activity){
+
+    activity.innerHTML = "";
+
+    recent.slice(0,5).forEach(item=>{
+
+        activity.innerHTML += `<li>${item}</li>`;
+
+    });
+
+}
   
 });
 
