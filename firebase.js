@@ -67,7 +67,7 @@ let lifetime = 0;
 let hwids = 0;
 let todayKeys = 0;
 let weekKeys = 0;
-
+let monthKeys = 0;
   
 const today = new Date().toDateString();  
 const keys = [];
@@ -119,6 +119,10 @@ const diffDays = Math.floor((now - created) / (1000 * 60 * 60 * 24));
 
 if(diffDays <= 7){
     weekKeys++;
+}
+
+if(diffDays <= 30){
+    monthKeys++;
 }
   
 if(data.buyer){
@@ -213,6 +217,7 @@ document.getElementById("lifetimeKeys").textContent = lifetime;
 document.getElementById("totalHwids").innerText = hwids;  
 document.getElementById("todayKeys").innerText = todayKeys;
 document.getElementById("weekKeys").innerText = weekKeys;
+document.getElementById("monthKeys").innerText = monthKeys;
   
 });
 
