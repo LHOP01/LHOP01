@@ -179,15 +179,19 @@ box-sizing:border-box;
 #toast{
 position:fixed;
 top:20px;
-right:20px;
+right:-350px;
+min-width:280px;
+max-width:320px;
+padding:14px 18px;
 background:#238636;
-color:white;
-padding:12px 18px;
-border-radius:8px;
-font-weight:bold;
-display:none;
+color:#fff;
+border-radius:12px;
+font-weight:600;
+font-size:14px;
+box-shadow:0 8px 25px rgba(0,0,0,.35);
 z-index:9999;
-box-shadow:0 5px 15px rgba(0,0,0,0.3);
+transition:right .35s ease;
+word-break:break-word;
 }
 
 #recentActivity{
