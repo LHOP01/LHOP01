@@ -36,7 +36,7 @@ window.saveKey = function(key, days, buyer){
     created: Date.now(),
     expire: Date.now() + (Number(days) * 24 * 60 * 60 * 1000)
 });
-
+    addLog("🔑 Generated Key : " + key);
 }
 
 
@@ -274,7 +274,7 @@ if(!confirm("Are you sure you want to delete this key?")){
 }
 
 remove(ref(db,"keys/"+id));
-
+addLog("🗑️ Key Deleted");
 showToast("🗑️ Key Deleted Successfully");
 
 }
@@ -310,7 +310,7 @@ update(ref(db,"keys/"+id),{
     validity: days,
     expire: Date.now() + (Number(days) * 24 * 60 * 60 * 1000)
 });
-
+addLog("✏️ Key Edited");
 showToast("✏️ Key Updated Successfully");
 }
 
@@ -319,7 +319,7 @@ window.revokeKey = function(id){
 update(ref(db,"keys/"+id),{
     status:"revoked"
 });
-
+addLog("🚫 Key Revoked");
 showToast("🚫 Key Revoked Successfully");
 
 }
@@ -435,7 +435,7 @@ window.resetHWID = function(id){
     update(ref(db, "keys/" + id), {
         hwid: ""
     });
-
+    addLog("🔄 HWID Reset");
     showToast("🔄 HWID Reset Successfully");
 
 }
