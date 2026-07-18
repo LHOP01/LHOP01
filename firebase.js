@@ -529,3 +529,85 @@ function updateDashboardChart(total, active, expired, lifetime) {
     });
 
   }
+
+    window.exportPDF = function(){
+
+    const { jsPDF } = window.jspdf;
+
+    const doc = new jsPDF();
+
+    doc.setFontSize(18);
+    doc.text("LHOP01 Admin Panel Report", 20, 20);
+
+    doc.setFontSize(12);
+
+    doc.text(
+        "Total Keys : " +
+        document.getElementById("totalKeys").textContent,
+        20,
+        40
+    );
+
+    doc.text(
+        "Active Keys : " +
+        document.getElementById("activeKeys").textContent,
+        20,
+        50
+    );
+
+    doc.text(
+        "Expired Keys : " +
+        document.getElementById("expiredKeys").textContent,
+        20,
+        60
+    );
+
+    doc.text(
+        "Lifetime Keys : " +
+        document.getElementById("lifetimeKeys").textContent,
+        20,
+        70
+    );
+
+    doc.save("LHOP01_Report.pdf");
+
+}
+
+window.importCSV = function(event){
+
+    const file = event.target.files[0];
+
+    if(!file){
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function(e){
+
+        const rows = e.target.result.split("\n");
+
+        rows.shift();
+
+        rows.forEach(row=>{
+
+            if(!row.trim()) return;
+
+            const cols = row.split(",");
+
+            const key = cols[0]?.trim();
+            const buyer = cols[1]?.trim();
+            const validity = cols[2]?.trim();
+            const status = cols[3]?.trim();
+
+            saveKey(key, validity, buyer);
+
+        });
+
+        showToast("✅ CSV Imported Successfully");
+
+    };
+
+    reader.readAsText(file);
+
+}
