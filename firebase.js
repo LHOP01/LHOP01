@@ -22,6 +22,35 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
+window.loadPanelSettings = function(){
+
+    onValue(ref(db,"settings"), (snapshot)=>{
+
+        const data = snapshot.val();
+
+        if(!data) return;
+
+        if(document.getElementById("owner")){
+            document.getElementById("owner").innerText =
+                "OWNER: " + (data.ownerName || "LHOP01");
+        }
+
+        if(document.getElementById("announcementText")){
+            document.getElementById("announcementText").innerText =
+                data.announcement || "Panel Successfully Working...";
+        }
+
+        if(data.themeColor){
+            document.documentElement.style.setProperty(
+                "--theme-color",
+                data.themeColor
+            );
+        }
+
+    });
+
+}
+
 window.saveKey = function(key, days, buyer){
 
     const id = push(ref(db,"keys"));
