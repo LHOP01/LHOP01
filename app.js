@@ -66,7 +66,15 @@ window.showToast = function(message){
     toast.style.display = "block";
 
     setTimeout(()=>{
+        toast.style.right = "20px";
+    },10);
+
+    setTimeout(()=>{
+        toast.style.right = "-350px";
+    },2500);
+
+    setTimeout(()=>{
         toast.style.display = "none";
-    },2000);
+    },2900);
 
 }
