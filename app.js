@@ -43,9 +43,11 @@ function generateCustomKey() {
 
 
 
-window.onload=function(){
+window.onload = function(){
 
-loadKeys();
+    loadPanelSettings();
+
+    loadKeys();
 
 }
 
