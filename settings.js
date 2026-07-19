@@ -30,6 +30,11 @@ window.saveSettings = function () {
   const logoUrl = document.getElementById("logoUrl").value;
   const themeColor = document.getElementById("themeColor").value;
   const panelVersion = document.getElementById("panelVersion").value;
+
+  if(panelName.trim() === ""){
+    alert("Panel Name is required");
+    return;
+  }
   
   set(ref(db,"settings"), {
     panelName: panelName,
