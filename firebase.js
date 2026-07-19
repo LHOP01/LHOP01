@@ -79,6 +79,11 @@ const filter = document.getElementById("statusFilter").value;
   
 onValue(ref(db,"keys"),(snapshot)=>{
 let buyers = new Set();
+
+keys.forEach((item)=>{
+
+const data = item.data;
+const id = item.id;
   
 table.innerHTML=`
 
@@ -124,6 +129,7 @@ table.innerHTML = `
 <th>Validity</th>
 <th>Status</th>
 <th>Action</th>
+<th>HWID</th>
 </tr>
 `;
 
@@ -132,10 +138,7 @@ table.innerHTML = `
 
 }  
   
-keys.forEach((item)=>{
 
-const data = item.data;
-const id = item.id;
 
 recent.push(
 `🔑 ${data.key} - ${data.buyer || "Unknown"}`
@@ -192,7 +195,7 @@ if (data.validity != "9999" &&
   
 total++;
 
-if(data.status === "active"){
+if(data.status !== "Active"){
     active++;
 }
 
@@ -204,15 +207,15 @@ if(data.status === "expired"){
     expired++;
 }  
 
-if(filter === "active" && data.status !== "Active"){
+if(filter === "active" && data.status !== "active"){
     return;
 }
 
-if(filter === "expired" && data.status !== "Expired"){
+if(filter === "Expired" && data.status !== "expired"){
     return;
 }
 
-if(filter === "lifetime" && data.validity !== "Lifetime"){
+if(filter === "lifetime" && data.validity !== "9999"){
     return;
 }
   
@@ -272,11 +275,11 @@ document.getElementById("monthKeys").innerText = monthKeys;
 const activity = document.getElementById("recentActivity");
 
 updateDashboardChart(
-    totalKeys,
-    activeKeys,
-    expiredKeys,
-    lifetimeKeys
-);  
+    total,
+    active,
+    expired,
+    lifetime
+);
 
 if(activity){
 
@@ -398,15 +401,7 @@ URL.revokeObjectURL(url);
 
 }
 
-window.createCustomKey = function(){
 
-const key = document.getElementById("customKey").value;
-const days = document.getElementById("customDays").value;
-
-if(key=="" || days==""){
-    alert("Fill all fields");
-    return;
-}
 
 saveKey(key, days);
 
@@ -491,30 +486,6 @@ window.searchKeys = function(){
 
 }
 
-window.exportKeys = function(){
-
-    let csv = "Key,Buyer,HWID,Validity,Status\n";
-
-    const rows = document.querySelectorAll("#keyTable tr");
-
-    rows.forEach((row, index)=>{
-
-        if(index === 0) return;
-
-        const cols = row.querySelectorAll("td");
-
-        if(cols.length >= 5){
-
-            csv +=
-                `"${cols[0].innerText}",` +
-                `"${cols[1].innerText}",` +
-                `"${cols[2].innerText}",` +
-                `"${cols[3].innerText}",` +
-                `"${cols[4].innerText}"\n`;
-
-        }
-
-    });
 
     const blob = new Blob([csv], {type:"text/csv"});
 
