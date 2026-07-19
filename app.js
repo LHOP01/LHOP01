@@ -19,6 +19,10 @@ const key="LHOP01-"+randomPart(4)+"-"+randomPart(4);
 
 document.getElementById("result").innerHTML=key;
 
+if(buyer.trim()===""){
+    showToast("⚠️ Enter Buyer Name");
+    return;
+}    
 saveKey(key, days, buyer);
 
 showToast("✅ Key Generated Successfully");
@@ -30,7 +34,7 @@ function generateCustomKey() {
     const days = document.getElementById("customDays").value;
 
     if (key === "" || days === "") {
-        alert("Fill all fields");
+        showToast("⚠️ Fill all fields");
         return;
     }
 
@@ -66,6 +70,10 @@ window.location.href = "login.html";
 }
 
 window.showToast = function(message){
+
+    const toast = document.getElementById("toast");
+
+    if(!toast) return;
 
     const toast = document.getElementById("toast");
 
