@@ -611,3 +611,6 @@ window.importCSV = function(event){
     reader.readAsText(file);
 
 }
+
+});
+}
