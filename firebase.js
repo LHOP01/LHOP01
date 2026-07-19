@@ -77,52 +77,40 @@ const table=document.getElementById("keyTable");
 const search = document.getElementById("searchKey").value.toLowerCase();
 const filter = document.getElementById("statusFilter").value;
   
-onValue(ref(db,"keys"),(snapshot)=>{
-let buyers = new Set();
+onValue(ref(db,"keys"), (snapshot)=>{
 
-keys.forEach((item)=>{
+    let buyers = new Set();
 
-const data = item.data;
-const id = item.id;
-  
-table.innerHTML=`
+    let total = 0;
+    let active = 0;
+    let expired = 0;
+    let lifetime = 0;
+    let hwids = 0;
+    let todayKeys = 0;
+    let weekKeys = 0;
+    let monthKeys = 0;
 
-<tr>
-<th>Key</th>
-<th>Validity</th>
-<th>Status</th>
-</tr>
+    const today = new Date().toDateString();
 
-`;
+    const keys = [];
+    const recent = [];
 
-let total = 0;
-let active = 0;
-let expired = 0;
-let lifetime = 0;  
-let hwids = 0;
-let todayKeys = 0;
-let weekKeys = 0;
-let monthKeys = 0;
-  
-const today = new Date().toDateString();  
-const keys = [];
-const recent = [];
-snapshot.forEach((item)=>{
-    keys.push({
-        id: item.key,
-        data: item.val()
+    snapshot.forEach((item)=>{
+        keys.push({
+            id:item.key,
+            data:item.val()
+        });
     });
-});
 
-const sort = document.getElementById("sortType").value;
+    const sort=document.getElementById("sortType").value;
 
-if(sort == "new"){
-    keys.sort((a,b)=> b.data.created - a.data.created);
-}else{
-    keys.sort((a,b)=> a.data.created - b.data.created);
-}
+    if(sort=="new"){
+        keys.sort((a,b)=>b.data.created-a.data.created);
+    }else{
+        keys.sort((a,b)=>a.data.created-b.data.created);
+    }
 
-table.innerHTML = `
+    table.innerHTML=`
 <tr>
 <th>Key</th>
 <th>Buyer</th>
@@ -132,9 +120,6 @@ table.innerHTML = `
 <th>HWID</th>
 </tr>
 `;
-
-
-    });
 
 }  
   
@@ -195,8 +180,8 @@ if (data.validity != "9999" &&
   
 total++;
 
-if(data.status !== "Active"){
-    active++;
+if(data.status == "active"){
+active++;
 }
 
 if(data.validity == "9999"){
