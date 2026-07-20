@@ -75,8 +75,6 @@ window.showToast = function(message){
 
     if(!toast) return;
 
-    const toast = document.getElementById("toast");
-
     toast.innerText = message;
 
     toast.style.display = "block";
