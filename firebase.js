@@ -100,7 +100,7 @@ onValue(ref(db,"keys"), (snapshot)=>{
             id:item.key,
             data:item.val()
         });
-    });
+    
 
     const sort=document.getElementById("sortType").value;
 
@@ -110,19 +110,11 @@ onValue(ref(db,"keys"), (snapshot)=>{
         keys.sort((a,b)=>a.data.created-b.data.created);
     }
 
-    table.innerHTML=`
-<tr>
-<th>Key</th>
-<th>Buyer</th>
-<th>Validity</th>
-<th>Status</th>
-<th>Action</th>
-<th>HWID</th>
-</tr>
-`;
+    
+  snapshot.forEach((item)=>{
 
-}  
-  
+    const id = item.key;
+    const data = item.val();
 
 
 recent.push(
