@@ -1,127 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>LHOP01 PAID PANEL</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LHOP01 Paid Panel</title>
 
 <link rel="stylesheet" href="style.css">
-  
-<style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
 
-body{
-margin:0;
-background:#0d1117;
-font-family:Arial;
-color:white;
-}
+<body>
 
-.sidebar{
-width:220px;
-height:100vh;
-background:#161b22;
-position:fixed;
-padding:20px;
-}
+<div class="sidebar">
+    <h2>LHOP01</h2>
 
-.sidebar h2{
-color:#58a6ff;
-}
+    <a href="#">📋 Dashboard</a>
+    <a href="#">🔑 Generate Key</a>
+    <a href="#">📝 Manage Keys</a>
+    <a href="#">⚙️ Settings</a>
 
-.sidebar a{
-display:block;
-color:white;
-text-decoration:none;
-padding:12px;
-margin-top:10px;
-background:#21262d;
-border-radius:8px;
-}
-
-.content{
-margin-left:250px;
-padding:20px;
-}
-
-.card{
-background:#161b22;
-padding:20px;
-border-radius:10px;
-margin-top:20px;
-}
-
-.stats{
-display:flex;
-flex-wrap:wrap;
-gap:15px;
-margin-top:20px;
-}
-
-.box{
-background:#21262d;
-padding:20px;
-border-radius:10px;
-width:180px;
-text-align:center;
-}
-
-.box h2{
-margin:0;
-color:#58a6ff;
-}
-
-.box p{
-margin-top:10px;
-}  
-
-input, select, button{
-width:100%;
-padding:12px;
-margin-top:10px;
-background:#21262d;
-color:white;
-border:none;
-border-radius:8px;
-box-sizing:border-box;
-}
-
-button{
-background:#238636;
-cursor:pointer;
-}  
-  
-
-<h2>LHOP01</h2>
-
-<a href="#">📋Dashboard</a>
-
-<a href="#">🔑Generate Key</a>
-
-<a href="#">🔑Custom Key</a>
-
-<a href="#">📝Manage Keys</a>
-
-<a href="#">⚙️Settings</a>
-
-<a href="#" onclick="logout()">↩️Logout</a>  
-
-<button id="themeToggle" onclick="toggleTheme()">
-    🌙 Dark / Light
-</button>
-  
+    <button id="themeToggle">🌙 Dark / Light</button>
 </div>
 
 <div class="content">
 
-<div class="topbar">
-
 <h1>LHOP01 PAID PANEL</h1>
-
-<div class="adminInfo">
-<p id="owner">OWNER: LHOP01</p>
-</div>
-
-</div>
-
-<div class="card">
 
 <div class="stats">
 
@@ -141,47 +45,29 @@ cursor:pointer;
 </div>
 
 <div class="box">
-<h2 id="lifetimeKeys">0</h2>
-<p>Lifetime Keys</p>
-</div>
-
-<div class="box">
-<h3 id="totalHwids">0</h3>
-<p>Total HWIDs</p>
-</div>
-
-<div class="box">
 <h2 id="todayKeys">0</h2>
 <p>Today's Keys</p>
-</div>
-
-<div class="box">
-<h2 id="weekKeys">0</h2>
-<p>This Week</p>
-</div>
-
-<div class="box">
-<h2 id="monthKeys">0</h2>
-<p>This Month</p>
-</div>
-  
-<div class="box">
-<h2 id="totalBuyers">0</h2>
-<p>Total Buyers</p>
 </div>
 
 </div>
 
 <div class="card">
-    <h2>📊 Dashboard Analytics</h2>
-    <canvas id="dashboardChart" height="120"></canvas>
-</div>  
-  
-<h2>Welcome @LHOP01 Owner</h2>
 
-<p id="announcementText">
-    Panel Successfully Working...
-</p>
+<h2>Generate Key</h2>
+
+<input id="buyerName" type="text" placeholder="Buyer Name">
+
+<select id="days">
+<option value="1">1 Day</option>
+<option value="7">7 Days</option>
+<option value="30">30 Days</option>
+<option value="365">1 Year</option>
+<option value="9999">Lifetime</option>
+</select>
+
+<button onclick="generateKey()">Generate Key</button>
+
+<div id="result"></div>
 
 </div>
 
@@ -189,69 +75,12 @@ cursor:pointer;
 
 <h2>Generated Keys</h2>
 
-<div class="card">
-
-<h2>Recent Activity</h2>
-
-<ul id="recentActivity">
-
-<li>No activity yet...</li>
-
-</ul>
-
-</div>  
-
-
-  
- <input
-type="text"
-id="searchBox"
-placeholder="Search Key or Buyer..."
-onkeyup="searchKeys()"> 
-  
-<input
-id="searchKey"
-type="text"
-placeholder="Search Key..."
-onkeyup="loadKeys()">
-
-<br><br>  
-
-<select id="sortType" onchange="loadKeys()">
-<option value="new">Newest First</option>
-<option value="old">Oldest First</option>
-</select>
-
-<select id="statusFilter" onchange="loadKeys()">
-<option value="all">All Keys</option>
-<option value="active">Active Keys</option>
-<option value="expired">Expired Keys</option>
-<option value="lifetime">Lifetime Keys</option>
-</select>
-  
- <button onclick="exportKeys()">
-Export CSV
-</button>
-
- <button onclick="exportPDF()">
-    📄 Export PDF
- </button> 
-
- <input
-    type="file"
-    id="csvFile"
-    accept=".csv"
-    onchange="importCSV(event)">
-  
-<br><br> 
-<br><br>
-  
-<table id="keyTable" width="100%">
+<table id="keyTable">
 
 <tr>
 <th>Buyer</th>
-<th>HWID</th>
-<th>Validity</th>
+<th>Key</th>
+<th>Days</th>
 <th>Status</th>
 <th>Action</th>
 </tr>
@@ -260,87 +89,10 @@ Export CSV
 
 </div>
 
-<div class="card">
-
-<h2>Custom Key</h2>
-
-<input type="text" id="customKey" placeholder="Enter Custom Key">
-
-<br><br>
-
-<input type="number" id="customDays" placeholder="Validity Days">
-
-<br><br>
-
-<button onclick="generateCustomKey()">
-Generate Custom Key
-</button>
-
 </div>
-  
-<div class="card">
-
-<h2>Generate Key</h2>
-
-<input
-type="text"
-id="buyerName"
-placeholder="Enter Buyer Name">
-
-<br><br>
-
-<div id="result"></div>
-  
-<select id="days">  
-<option value="1">1 Day</option>
-<option value="3">3 Days</option>  
-<option value="7">7 Days</option>
-<option value="15">15 Days</option>  
-<option value="30">30 Days</option>
-<option value="365">1 Year</option>
-<option value="9999">Lifetime</option>
-</select>
-
-<br>
-
-<button onclick="generateKey()">Generate Random Key</button>
-
-<br><br>
-
-
-</div>  
-  
-</div>
-
-<!-- Firebase -->
-<script type="module">
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getDatabase } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyAQ5CO4sLv_8j22N0YJyQmz8hIZpMs6DhE",
-  authDomain: "lhop01-admin.firebaseapp.com",
-  databaseURL: "https://lhop01-admin-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "lhop01-admin",
-  storageBucket: "lhop01-admin.firebasestorage.app",
-  messagingSenderId: "382345315199",
-  appId: "1:382345315199:web:fafa4d6ee8d82e1d97104a"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-
-console.log("Firebase Connected Successfully");
-
-</script>
 
 <script type="module" src="firebase.js"></script>
-<script src="app.js"></script>  
+<script src="app.js"></script>
 
-<div id="toast"></div>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>  
 </body>
 </html>
