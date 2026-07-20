@@ -1,31 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LHOP01 Paid Panel</title>
+
+<title>LHOP01 PAID PANEL</title>
 
 <link rel="stylesheet" href="style.css">
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
 </head>
 
 <body>
 
+<!-- Sidebar -->
 <div class="sidebar">
-    <h2>LHOP01</h2>
 
-    <a href="#">📋 Dashboard</a>
-    <a href="#">🔑 Generate Key</a>
-    <a href="#">📝 Manage Keys</a>
-    <a href="#">⚙️ Settings</a>
+<h2>LHOP01</h2>
 
-    <button id="themeToggle">🌙 Dark / Light</button>
+<a href="#">📋 Dashboard</a>
+<a href="#">🔑 Generate Key</a>
+<a href="#">🔑 Custom Key</a>
+<a href="#">📝 Manage Keys</a>
+<a href="#">⚙️ Settings</a>
+
+<button id="themeToggle" onclick="toggleTheme()">
+🌙 Dark / Light
+</button>
+
 </div>
 
+<!-- Main Content -->
 <div class="content">
 
+<div class="topbar">
 <h1>LHOP01 PAID PANEL</h1>
+<p id="owner">OWNER : LHOP01</p>
+</div>
+
+<!-- Dashboard Stats -->
+
+<div class="card">
 
 <div class="stats">
 
@@ -45,52 +63,247 @@
 </div>
 
 <div class="box">
+<h2 id="lifetimeKeys">0</h2>
+<p>Lifetime Keys</p>
+</div>
+
+<div class="box">
+<h2 id="totalHwids">0</h2>
+<p>Total HWIDs</p>
+</div>
+
+<div class="box">
 <h2 id="todayKeys">0</h2>
 <p>Today's Keys</p>
 </div>
 
+<div class="box">
+<h2 id="weekKeys">0</h2>
+<p>This Week</p>
 </div>
+
+<div class="box">
+<h2 id="monthKeys">0</h2>
+<p>This Month</p>
+</div>
+
+<div class="box">
+<h2 id="totalBuyers">0</h2>
+<p>Total Buyers</p>
+</div>
+
+</div>
+
+</div>
+
+<!-- Analytics -->
 
 <div class="card">
 
-<h2>Generate Key</h2>
+<h2>📊 Dashboard Analytics</h2>
 
-<input id="buyerName" type="text" placeholder="Buyer Name">
-
-<select id="days">
-<option value="1">1 Day</option>
-<option value="7">7 Days</option>
-<option value="30">30 Days</option>
-<option value="365">1 Year</option>
-<option value="9999">Lifetime</option>
-</select>
-
-<button onclick="generateKey()">Generate Key</button>
-
-<div id="result"></div>
+<canvas id="dashboardChart" height="120"></canvas>
 
 </div>
+
+<!-- Welcome -->
+
+<div class="card">
+
+<h2>Welcome @LHOP01 Owner</h2>
+
+<p id="announcementText">
+Panel Successfully Working...
+</p>
+
+</div>
+
+    <!-- Generated Keys -->
 
 <div class="card">
 
 <h2>Generated Keys</h2>
 
-<table id="keyTable">
+<input
+type="text"
+id="searchBox"
+placeholder="Search Buyer or Key..."
+onkeyup="searchKeys()">
+
+<br><br>
+
+<select id="sortType" onchange="loadKeys()">
+<option value="new">Newest First</option>
+<option value="old">Oldest First</option>
+</select>
+
+<br><br>
+
+<select id="statusFilter" onchange="loadKeys()">
+<option value="all">All Keys</option>
+<option value="active">Active</option>
+<option value="expired">Expired</option>
+<option value="lifetime">Lifetime</option>
+</select>
+
+<br><br>
+
+<button onclick="exportKeys()">
+📥 Export CSV
+</button>
+
+<br><br>
+
+<button onclick="exportPDF()">
+📄 Export PDF
+</button>
+
+<br><br>
+
+<input
+type="file"
+id="csvFile"
+accept=".csv"
+onchange="importCSV(event)">
+
+<br><br>
+
+<table id="keyTable" width="100%" border="1" cellspacing="0" cellpadding="10">
+
+<thead>
 
 <tr>
+
 <th>Buyer</th>
 <th>Key</th>
+<th>HWID</th>
 <th>Days</th>
 <th>Status</th>
 <th>Action</th>
+
 </tr>
+
+</thead>
+
+<tbody id="tableBody">
+
+</tbody>
 
 </table>
 
 </div>
 
+<!-- Generate Key -->
+
+<div class="card">
+
+<h2>Generate Random Key</h2>
+
+<input
+type="text"
+id="buyerName"
+placeholder="Enter Buyer Name">
+
+<br><br>
+
+<select id="days">
+
+<option value="1">1 Day</option>
+<option value="3">3 Days</option>
+<option value="7">7 Days</option>
+<option value="15">15 Days</option>
+<option value="30">30 Days</option>
+<option value="365">1 Year</option>
+<option value="9999">Lifetime</option>
+
+</select>
+
+<br><br>
+
+<button onclick="generateKey()">
+
+Generate Random Key
+
+</button>
+
+<br><br>
+
+<div id="result"></div>
+
 </div>
 
+<!-- Custom Key -->
+
+<div class="card">
+
+<h2>Generate Custom Key</h2>
+
+<input
+type="text"
+id="customKey"
+placeholder="Enter Custom Key">
+
+<br><br>
+
+<input
+type="number"
+id="customDays"
+placeholder="Validity Days">
+
+<br><br>
+
+<button onclick="generateCustomKey()">
+
+Generate Custom Key
+
+</button>
+
+</div>
+
+<!-- Recent Activity -->
+
+<div class="card">
+
+<h2>Recent Activity</h2>
+
+<ul id="recentActivity">
+
+<li>No Activity Yet...</li>
+
+</ul>
+
+</div>
+
+    <!-- Toast -->
+<div id="toast"></div>
+
+<!-- Firebase -->
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT.firebaseapp.com",
+    databaseURL: "YOUR_DATABASE_URL",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+// Firebase ko global banao
+window.firebaseDB = db;
+
+console.log("✅ Firebase Connected Successfully");
+
+</script>
+
+<!-- External JS Files -->
 <script type="module" src="firebase.js"></script>
 <script src="app.js"></script>
 
