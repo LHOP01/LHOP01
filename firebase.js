@@ -589,5 +589,3 @@ window.importCSV = function(event){
 
 }
 
-});
-}
