@@ -100,7 +100,7 @@ onValue(ref(db,"keys"), (snapshot)=>{
             id:item.key,
             data:item.val()
         });
-    
+    });
 
     const sort=document.getElementById("sortType").value;
 
@@ -110,47 +110,49 @@ onValue(ref(db,"keys"), (snapshot)=>{
         keys.sort((a,b)=>a.data.created-b.data.created);
     }
 
-    
-  snapshot.forEach((item)=>{
+    table.innerHTML=`
+<tr>
+<th>Key</th>
+<th>Buyer</th>
+<th>Validity</th>
+<th>Status</th>
+<th>Action</th>
+<th>HWID</th>
+</tr>
+`;
 
-    const id = item.key;
-    const data = item.val();
+    keys.forEach(({ id, data }) => {
 
+        recent.push(
+            `🔑 ${data.key} - ${data.buyer || "Unknown"}`
+        );
+        
+        if (data.created) {
+            const keyDate = new Date(data.created).toDateString();
+            if (keyDate === today) {
+                todayKeys++;
+            }
+        }
 
-recent.push(
-`🔑 ${data.key} - ${data.buyer || "Unknown"}`
-);
-  
-if(data.created){
+        const now = new Date();
+        const created = new Date(data.created);
+        const diffDays = Math.floor((now - created) / (1000 * 60 * 60 * 24));
 
-    const keyDate = new Date(data.created).toDateString();
+        if (diffDays <= 7) {
+            weekKeys++;
+        }
 
-    if(keyDate === today){
-        todayKeys++;
-    }
+        if (diffDays <= 30) {
+            monthKeys++;
+        }
 
-}  
+        if (data.buyer) {
+            buyers.add(data.buyer);
+        }
 
-const now = new Date();
-const created = new Date(data.created);
-
-const diffDays = Math.floor((now - created) / (1000 * 60 * 60 * 24));
-
-if(diffDays <= 7){
-    weekKeys++;
-}
-
-if(diffDays <= 30){
-    monthKeys++;
-}
-  
-if(data.buyer){
-    buyers.add(data.buyer);
-}  
-  
-if(data.hwid){
-    hwids++;
-}
+        if (data.hwid) {
+            hwids++;
+        }
   
 const keyMatch = data.key.toLowerCase().includes(search);
 const buyerMatch = (data.buyer || "").toLowerCase().includes(search);
@@ -380,15 +382,6 @@ URL.revokeObjectURL(url);
 
 
 
-saveKey(key, days);
-
-alert("Custom Key Saved");
-
-document.getElementById("customKey").value="";
-document.getElementById("customDays").value="";
-
-}
-
 window.bindHWID = function(id, hwid){
 
     update(ref(db, "keys/" + id), {
@@ -463,19 +456,6 @@ window.searchKeys = function(){
 
 }
 
-
-    const blob = new Blob([csv], {type:"text/csv"});
-
-    const a = document.createElement("a");
-
-    a.href = URL.createObjectURL(blob);
-
-    a.download = "LHOP01_Keys.csv";
-
-    a.click();
-
-}
-
 let dashboardChart = null;
 
 function updateDashboardChart(total, active, expired, lifetime) {
@@ -505,9 +485,9 @@ function updateDashboardChart(total, active, expired, lifetime) {
         }
     });
 
-  }
+}
 
-    window.exportPDF = function(){
+window.exportPDF = function(){
 
     const { jsPDF } = window.jspdf;
 
